@@ -41,8 +41,8 @@ export default function SmartWasteFlagship() {
       <div className="container">
         {/* Section Header */}
         <div className="section-label">
-          <span>03 / FEATURED CASE STUDY</span>
-          <span>NEW STARS HARDWARE & SENSOR LAB</span>
+          <span>03 / FEATURED FLAGSHIP CASE STUDY</span>
+          <span>CIVIC IOT & HARDWARE DEEP DIVE</span>
         </div>
 
         <div className="flagship-hero">

@@ -27,11 +27,12 @@ import ProjectModal from './components/ProjectModal'
 import Reveal from './components/Reveal'
 import ScrollProgress from './components/ScrollProgress'
 import StarField from './components/StarField'
-import { projects, type Project } from './data/projects'
+import type { Project } from './data/projects'
 import { useGitHubData } from './hooks/useGitHubData'
 import GitHubSection from './sections/GitHubSection'
-import ProjectCard from './sections/ProjectCard'
+import InnovationsSection from './sections/InnovationsSection'
 import SmartWasteFlagship from './sections/SmartWasteFlagship'
+import BGAIFeatured from './sections/BGAIFeatured'
 
 /**
  * 1. HERO SECTION: NEW STARS OFFICIAL LAUNCH
@@ -43,7 +44,7 @@ function Hero() {
 
   return (
     <section className="hero container" id="top">
-      {/* Subtle star constellation and orbital rings background */}
+      {/* Subtle star constellation background */}
       <StarField />
 
       <div className="hero-meta">
@@ -54,83 +55,130 @@ function Hero() {
         <span className="hero-location">IDEAS TODAY. INNOVATIONS TOMORROW.</span>
       </div>
 
-      <div className="hero-title-wrap">
-        <motion.p
-          className="hero-kicker"
-          initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          AN EMERGING TECH & VENTURE INITIATIVE
-        </motion.p>
+      <div className="hero-grid">
+        {/* Left Column: Eyebrow, Main Headline, Tagline, Supporting Description, Dual CTAs */}
+        <div className="hero-content-col">
+          <motion.p
+            className="hero-kicker"
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            AN EMERGING TECH & VENTURE INITIATIVE
+          </motion.p>
 
-        {/* Masked dramatic heading reveals */}
-        <h1 className="hero-title new-stars-hero-title">
-          <span className="mask-wrapper">
-            <motion.span
-              className="mask-inner"
-              initial={reduceMotion ? false : { y: '105%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.85, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            >
-              BIG IDEAS.
-            </motion.span>
-          </span>
-          <span className="mask-wrapper">
-            <motion.span
-              className="mask-inner"
-              initial={reduceMotion ? false : { y: '105%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.85, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            >
-              REAL PROBLEMS.
-            </motion.span>
-          </span>
-          <span className="mask-wrapper title-second">
-            <motion.span
-              className="mask-inner"
-              initial={reduceMotion ? false : { y: '105%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.85, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            >
-              BOLD <em>INNOVATIONS.</em>
-            </motion.span>
-          </span>
-        </h1>
-      </div>
+          {/* Masked dramatic heading reveals */}
+          <h1 className="hero-title new-stars-hero-title">
+            <span className="mask-wrapper">
+              <motion.span
+                className="mask-inner"
+                initial={reduceMotion ? false : { y: '105%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.85, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              >
+                BIG IDEAS.
+              </motion.span>
+            </span>
+            <span className="mask-wrapper">
+              <motion.span
+                className="mask-inner"
+                initial={reduceMotion ? false : { y: '105%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.85, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              >
+                REAL PROBLEMS.
+              </motion.span>
+            </span>
+            <span className="mask-wrapper">
+              <motion.span
+                className="mask-inner"
+                initial={reduceMotion ? false : { y: '105%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.85, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
+              >
+                BOLD <em>INNOVATIONS.</em>
+              </motion.span>
+            </span>
+          </h1>
 
-      <div className="hero-bottom-founder">
-        <div className="hero-brand-statement">
-          <p className="hero-tagline-lead">“Ideas today. Innovations tomorrow.”</p>
-          <p className="hero-supporting-copy">
-            <strong>NEW STARS</strong> is an emerging technology and innovation initiative exploring AI, connected
-            IoT systems, and modern software architecture. Founded by Boopathi, we engineer functional prototypes
-            that solve concrete operational problems across urban infrastructure, education, and commerce.
-          </p>
+          <div className="hero-brand-statement">
+            <p className="hero-tagline-lead">“Ideas today. Innovations tomorrow.”</p>
+            <p className="hero-supporting-copy">
+              <strong>NEW STARS</strong> is an emerging technology and innovation initiative exploring AI, connected
+              IoT systems, and modern software architecture. Founded by Boopathi, we engineer functional prototypes
+              that solve concrete operational problems across urban infrastructure, education, and commerce.
+            </p>
+          </div>
+
+          {/* Dual CTAs */}
+          <div className="hero-cta-group">
+            <a href="#innovations" className="hero-cta-btn primary">
+              EXPLORE INNOVATIONS <ArrowRight size={16} />
+            </a>
+            <a href="#contact" className="hero-cta-btn secondary">
+              PARTNER WITH US <ArrowUpRight size={16} />
+            </a>
+          </div>
         </div>
 
-        {/* Dual CTAs */}
-        <div className="hero-cta-group">
-          <a href="#innovations" className="hero-cta-btn primary">
-            EXPLORE INNOVATIONS <ArrowRight size={16} />
-          </a>
-          <a href="#contact" className="hero-cta-btn secondary">
-            PARTNER WITH US <ArrowUpRight size={16} />
-          </a>
+        {/* Right Column: Large animated orbital star & constellation illustration */}
+        <div className="hero-visual-col" aria-hidden="true">
+          <div className="hero-orbital-stage">
+            {/* Ambient luminous core glow */}
+            <div className="orbital-core-aura" />
+
+            {/* Outermost Orbit: dashed ring with rotating celestial markers */}
+            <motion.div
+              className="stage-ring ring-l1"
+              animate={reduceMotion ? undefined : { rotate: 360 }}
+              transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
+            >
+              <span className="orbit-marker marker-top" />
+              <span className="orbit-marker marker-bottom" />
+            </motion.div>
+
+            {/* Intermediate Orbit: solid hairline with opposing rotation */}
+            <motion.div
+              className="stage-ring ring-l2"
+              animate={reduceMotion ? undefined : { rotate: -360 }}
+              transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
+            >
+              <span className="orbit-marker marker-left" />
+              <span className="orbit-marker marker-right" />
+            </motion.div>
+
+            {/* Inner Precision Orbit */}
+            <motion.div
+              className="stage-ring ring-l3"
+              animate={reduceMotion ? undefined : { rotate: 360 }}
+              transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+            />
+
+            {/* Crosshair alignment axes */}
+            <div className="stage-crosshair axis-h" />
+            <div className="stage-crosshair axis-v" />
+
+            {/* Rotating Emblem Centerpiece */}
+            <motion.div
+              className="stage-center-emblem"
+              animate={reduceMotion ? undefined : { rotate: 360 }}
+              transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+            >
+              <div className="emblem-inner-disc">
+                <span className="emblem-text-top">NEW</span>
+                <span className="emblem-star-icon">★</span>
+                <span className="emblem-text-bottom">STARS</span>
+              </div>
+            </motion.div>
+
+            {/* Sub-label telemetry badge */}
+            <div className="stage-telemetry-badge">
+              <span className="status-dot-sm" />
+              <span>ORBITAL LAB · SYSTEM ONLINE</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Futuristic orbital emblem */}
-      <motion.div
-        className="hero-decoration new-stars-badge"
-        aria-hidden="true"
-        animate={reduceMotion ? undefined : { rotate: 360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-      >
-        <span>NEW</span>
-        <span>★</span>
-        <span>STARS</span>
-      </motion.div>
     </section>
   )
 }
@@ -217,55 +265,7 @@ function About({ repoCount }: { repoCount: number }) {
 }
 
 /**
- * 3. INNOVATIONS: DETAILED CASE STUDIES
- */
-function Innovations({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
-  return (
-    <section className="section work-section" id="innovations">
-      <div className="container">
-        <div className="section-label">
-          <span>02 / INNOVATION PORTFOLIO</span>
-          <span>PROBLEM-DRIVEN VENTURE INITIATIVES</span>
-        </div>
-
-        <div className="work-heading">
-          <Reveal>
-            <h2>
-              INNOVATIONS<br />
-              <span>IN MOTION.</span>
-            </h2>
-          </Reveal>
-          <p>
-            Four core initiatives engineered by NEW STARS. Each project addresses verified real-world friction
-            with documented architectures, working codebases, and realistic milestones.
-          </p>
-        </div>
-
-        <div className="project-grid">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onOpenDetails={onOpenProject}
-            />
-          ))}
-        </div>
-
-        <div className="project-note-banner">
-          <span className="note-star">✳</span>
-          <p>
-            <strong>CASE STUDY DEEP-DIVE:</strong> Select any innovation card above to examine the full 9-point technical
-            matrix—problem explored, target users, implemented solution, technology stack, working capabilities, active
-            development, roadmap, and verified repositories.
-          </p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/**
- * 4. OUR APPROACH: INNOVATION JOURNEY (EXPLORE -> BUILD -> TEST -> COLLABORATE)
+ * 3. OUR APPROACH: INNOVATION JOURNEY (EXPLORE -> BUILD -> TEST -> COLLABORATE)
  */
 function OurApproach() {
   const steps = [
@@ -594,8 +594,9 @@ export default function App() {
         </div>
 
         <About repoCount={github.profile.public_repos} />
-        <Innovations onOpenProject={(proj) => setSelectedProject(proj)} />
+        <InnovationsSection github={github} onOpenDetails={(proj) => setSelectedProject(proj)} />
         <SmartWasteFlagship />
+        <BGAIFeatured onOpenDetails={(proj) => setSelectedProject(proj)} />
         <GitHubSection github={github} />
         <OurApproach />
         <ContactSection />

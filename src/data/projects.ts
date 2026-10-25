@@ -73,22 +73,23 @@ export const projects: Project[] = [
   {
     id: 'bg-chatbox',
     number: '02',
-    category: 'APPLIED AI · DATABASE INTELLIGENCE',
-    title: 'BG AI\nDatabase Chat',
-    headline: 'Natural Language Query Engine & Dynamic Visualizations',
+    category: 'Artificial Intelligence & Software',
+    title: 'BG AI Platform',
+    headline: 'BG AI Platform — Conversational Database Interaction',
     problemExplored:
       'Non-technical product builders, analysts, and operators struggle to interrogate production relational databases without relying on specialized SQL engineers.',
     intendedUsers:
       'Startup teams, data analysts, operations managers, and non-technical founders needing instant conversational access to relational data.',
     proposedSolution:
-      'A conversational database intelligence platform that inspects schema metadata, safely converts natural language questions into verified queries, and renders real-time data charts.',
+      'An AI-powered platform designed to make database interaction more accessible through conversational interfaces, natural language query translation, and real-time visualization.',
     description:
-      'AI-powered conversational database intelligence system built with FastAPI and React 19. Translates natural language questions into structured queries, executes relational analysis, and visualizes insights dynamically.',
+      'An AI-powered platform designed to make database interaction more accessible through conversational interfaces.',
     tags: ['FastAPI 0.141', 'React 19', 'TypeScript', 'SQLAlchemy 2.0', 'Vite 8', 'Tailwind CSS v4'],
     visual: 'database',
     statusBadge: 'Active Development',
     statusType: 'active',
     repoUrl: 'https://github.com/boopathiravi03/BG_chatbox',
+    demoUrl: 'https://thebg.con.in',
     features: {
       completed: [
         'FastAPI 0.141 backend service with SQLAlchemy 2.0 ORM integration',
@@ -194,3 +195,16 @@ export const projects: Project[] = [
     verificationNote: 'Verified repository and live web preview on Vercel (farm-trading-app.vercel.app).'
   }
 ]
+
+export function getProjectByRepoName(repoName: string): Project | undefined {
+  const normalized = repoName.toLowerCase().replace(/[-_]/g, '')
+  return projects.find((p) => {
+    if (p.repoUrl) {
+      const parts = p.repoUrl.split('/')
+      const rName = parts[parts.length - 1].toLowerCase().replace(/[-_]/g, '')
+      if (rName === normalized) return true
+    }
+    const pid = p.id.toLowerCase().replace(/[-_]/g, '')
+    return pid === normalized || normalized.includes(pid) || pid.includes(normalized)
+  })
+}

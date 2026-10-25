@@ -99,12 +99,12 @@ export const FALLBACK_REPOS: GitHubRepo[] = [
     name: 'BG_chatbox',
     full_name: 'boopathiravi03/BG_chatbox',
     html_url: 'https://github.com/boopathiravi03/BG_chatbox',
-    description: 'AI-Powered Conversational Database Intelligence & Visualization with FastAPI and React 19.',
+    description: 'An AI-powered platform designed to make database interaction more accessible through conversational interfaces.',
     language: 'Python',
     stargazers_count: 0,
     forks_count: 0,
     updated_at: '2026-10-22T12:11:46Z',
-    homepage: null,
+    homepage: 'https://thebg.con.in',
     fork: false
   },
   {

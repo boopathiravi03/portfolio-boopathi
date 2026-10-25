@@ -1,19 +1,13 @@
-import { useMemo, useState } from 'react'
 import {
   AlertCircle,
   ArrowUpRight,
-  Calendar,
   Code2,
-  ExternalLink,
   GitCommit,
-  GitFork,
   Github,
   RefreshCw,
-  Search,
   Sparkles,
   Star
 } from 'lucide-react'
-import { motion, useReducedMotion } from 'motion/react'
 import CountUp from '../components/CountUp'
 import Reveal from '../components/Reveal'
 import type { UseGitHubDataReturn } from '../hooks/useGitHubData'
@@ -21,30 +15,6 @@ import type { GitHubEvent } from '../services/github'
 
 interface GitHubSectionProps {
   github: UseGitHubDataReturn
-}
-
-const LANGUAGE_COLORS: Record<string, string> = {
-  TypeScript: '#3178C6',
-  JavaScript: '#F7DF1E',
-  Python: '#3572A5',
-  Kotlin: '#A97BFF',
-  Dart: '#00B4AB',
-  'C++': '#F34B7D',
-  HTML: '#E34C26',
-  Default: '#A3E635'
-}
-
-function formatDate(isoString: string): string {
-  try {
-    const d = new Date(isoString)
-    return d.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    })
-  } catch {
-    return isoString
-  }
 }
 
 function formatRelativeTime(isoString: string): string {
@@ -89,43 +59,9 @@ function formatEventSummary(event: GitHubEvent): { title: string; detail: string
 
 export default function GitHubSection({ github }: GitHubSectionProps) {
   const { profile, repos, events, loading, isFallback, rateLimited, lastFetched, refresh } = github
-  const reduceMotion = useReducedMotion()
 
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('All')
-  const [searchQuery, setSearchQuery] = useState<string>('')
-  const [sortBy, setSortBy] = useState<'updated' | 'stars'>('updated')
-
-  // Available unique languages
-  const availableLanguages = useMemo(() => {
-    const langs = new Set<string>()
-    repos.forEach((repo) => {
-      if (repo.language) langs.add(repo.language)
-    })
-    return ['All', ...Array.from(langs).sort()]
-  }, [repos])
-
-  // Filter & sort repositories
-  const filteredRepos = useMemo(() => {
-    return repos
-      .filter((repo) => {
-        const matchesLang = selectedLanguage === 'All' || repo.language === selectedLanguage
-        const matchesSearch =
-          searchQuery.trim() === '' ||
-          repo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (repo.description && repo.description.toLowerCase().includes(searchQuery.toLowerCase()))
-        return matchesLang && matchesSearch
-      })
-      .sort((a, b) => {
-        if (sortBy === 'stars') {
-          return b.stargazers_count - a.stargazers_count
-        }
-        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-      })
-  }, [repos, selectedLanguage, searchQuery, sortBy])
-
-  const totalStars = useMemo(() => {
-    return repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0)
-  }, [repos])
+  const totalStars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0)
+  const languageSet = new Set(repos.map((r) => r.language).filter(Boolean))
 
   return (
     <section className="section github-section" id="innovation-lab">
@@ -133,20 +69,19 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
         {/* Section Header */}
         <div className="section-label">
           <span>04 / INNOVATION LAB</span>
-          <span>OPEN REPOSITORIES & REAL-TIME ACTIVITY</span>
+          <span>REAL-TIME COMMITS & LAB PULSE</span>
         </div>
 
         <div className="github-head">
           <div>
             <Reveal>
               <h2 className="github-title">
-                INNOVATION LAB.<br />
-                <span>CODE IN THE OPEN.</span>
+                THE LAB PULSE.<br />
+                <span>BUILDING IN REAL-TIME.</span>
               </h2>
             </Reveal>
             <p className="github-subtitle">
-              The public engineering engine behind NEW STARS. All open-source repositories and codebases are developed
-              under the verified account{' '}
+              Live engineering telemetry from our open GitHub repositories under{' '}
               <a
                 href="https://github.com/boopathiravi03"
                 target="_blank"
@@ -155,7 +90,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               >
                 @boopathiravi03 <ArrowUpRight size={13} />
               </a>
-              . Every initiative is backed by real, inspectable commits.
+              . All commits, branch updates, and repository activity stream directly through GitHub’s public REST API.
             </p>
           </div>
 
@@ -165,7 +100,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               className="github-refresh-btn"
               onClick={() => refresh()}
               disabled={loading}
-              aria-label="Refresh GitHub Data"
+              aria-label="Sync GitHub Lab Activity"
             >
               <RefreshCw size={14} className={loading ? 'is-spinning' : ''} />
               <span>{loading ? 'Syncing...' : 'Sync Lab Activity'}</span>
@@ -178,7 +113,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
           </div>
         </div>
 
-        {/* Partial View Disclaimer Note */}
+        {/* Scope Disclaimer */}
         <div className="build-log-disclaimer">
           <Sparkles size={16} className="text-lime" />
           <p>
@@ -187,7 +122,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
           </p>
         </div>
 
-        {/* Rate limit / Fallback Banner */}
+        {/* Fallback Banner */}
         {(rateLimited || isFallback) && (
           <div className="github-banner" role="status">
             <AlertCircle size={16} />
@@ -217,29 +152,29 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
 
           <div className="gh-stat-card">
             <div className="gh-stat-top">
-              <span>ACTIVE DOMAINS</span>
+              <span>ACTIVE STACKS</span>
               <Github size={16} />
             </div>
             <strong>
-              <CountUp end={availableLanguages.length - 1} duration={1.2} />
+              <CountUp end={languageSet.size} duration={1.2} />
             </strong>
-            <small>IoT, AI, Mobile, Web Systems</small>
+            <small>TypeScript, Python, Kotlin, Dart, C++</small>
           </div>
 
           <div className="gh-stat-card">
             <div className="gh-stat-top">
-              <span>TOTAL STARS</span>
+              <span>COMMUNITY STARS</span>
               <Star size={16} />
             </div>
             <strong>
               <CountUp end={totalStars} duration={1.2} />
             </strong>
-            <small>Accumulated across public repositories</small>
+            <small>Across all public codebases</small>
           </div>
 
           <div className="gh-stat-card">
             <div className="gh-stat-top">
-              <span>VERIFIED ACCOUNT</span>
+              <span>PRIMARY CONTRIBUTOR</span>
               <span className="status-dot-sm" />
             </div>
             <strong className="profile-badge">boopathiravi03</strong>
@@ -260,7 +195,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
           </div>
 
           <div className="activity-timeline">
-            {events.slice(0, 6).map((evt) => {
+            {events.slice(0, 8).map((evt) => {
               const summary = formatEventSummary(evt)
               const repoUrl = `https://github.com/${evt.repo.name}`
               return (
@@ -290,140 +225,6 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
             })}
           </div>
         </div>
-
-        {/* Repositories Controls & Filter Bar */}
-        <div className="github-controls-bar">
-          <div className="search-input-wrap">
-            <Search size={15} />
-            <input
-              type="text"
-              placeholder="Search codebases by name or keyword..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Search repositories"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                className="clear-search-btn"
-                onClick={() => setSearchQuery('')}
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-
-          <div className="language-pills" role="radiogroup" aria-label="Filter by language">
-            {availableLanguages.map((lang) => (
-              <button
-                key={lang}
-                type="button"
-                role="radio"
-                aria-checked={selectedLanguage === lang}
-                className={`lang-pill ${selectedLanguage === lang ? 'is-active' : ''}`}
-                onClick={() => setSelectedLanguage(lang)}
-              >
-                {lang !== 'All' && (
-                  <span
-                    className="lang-color-indicator"
-                    style={{ backgroundColor: LANGUAGE_COLORS[lang] || LANGUAGE_COLORS.Default }}
-                  />
-                )}
-                {lang}
-              </button>
-            ))}
-          </div>
-
-          <div className="sort-group">
-            <label htmlFor="repo-sort-select">SORT:</label>
-            <select
-              id="repo-sort-select"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'updated' | 'stars')}
-            >
-              <option value="updated">Recently Updated</option>
-              <option value="stars">Most Stars</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Repositories Grid */}
-        <div className="repos-grid">
-          {filteredRepos.map((repo, i) => (
-            <motion.div
-              key={repo.id}
-              className="repo-card"
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.35, delay: (i % 6) * 0.05 }}
-              whileHover={reduceMotion ? undefined : { y: -5 }}
-            >
-              <div className="repo-top">
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="repo-name"
-                  aria-label={`View repository ${repo.name} on GitHub`}
-                >
-                  <Code2 size={16} />
-                  <span>{repo.name}</span>
-                  <ExternalLink size={13} className="repo-ext" />
-                </a>
-                {repo.language && (
-                  <span className="repo-lang-badge">
-                    <span
-                      className="lang-dot"
-                      style={{
-                        backgroundColor: LANGUAGE_COLORS[repo.language] || LANGUAGE_COLORS.Default
-                      }}
-                    />
-                    {repo.language}
-                  </span>
-                )}
-              </div>
-
-              <p className="repo-desc">
-                {repo.description || (
-                  <span className="no-desc-text">Open-source codebase by Boopathi.</span>
-                )}
-              </p>
-
-              <div className="repo-meta-row">
-                <div className="repo-stats-group">
-                  <span className="repo-stat" title={`${repo.stargazers_count} stars`}>
-                    <Star size={13} /> {repo.stargazers_count}
-                  </span>
-                  <span className="repo-stat" title={`${repo.forks_count} forks`}>
-                    <GitFork size={13} /> {repo.forks_count}
-                  </span>
-                </div>
-
-                <span className="repo-date" title={`Last updated on ${repo.updated_at}`}>
-                  <Calendar size={12} /> {formatDate(repo.updated_at)}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {filteredRepos.length === 0 && (
-          <div className="no-repos-found">
-            <p>No repositories match your active search and filter criteria.</p>
-            <button
-              type="button"
-              className="reset-filters-btn"
-              onClick={() => {
-                setSelectedLanguage('All')
-                setSearchQuery('')
-              }}
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
       </div>
     </section>
   )

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { useReducedMotion } from 'motion/react'
 
 interface Star {
   id: number
@@ -42,18 +42,6 @@ export default function StarField() {
       {/* Background ambient nebula glow */}
       <div className="nebula-glow nebula-top" />
       <div className="nebula-glow nebula-bottom" />
-
-      {/* Futuristic orbital constellation rings */}
-      <motion.div
-        className="orbital-ring ring-outer"
-        animate={reduceMotion ? undefined : { rotate: 360 }}
-        transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="orbital-ring ring-middle"
-        animate={reduceMotion ? undefined : { rotate: -360 }}
-        transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
-      />
 
       {/* Twinkling star particles */}
       {stars.map((star) => (
