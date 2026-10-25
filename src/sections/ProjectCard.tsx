@@ -43,7 +43,7 @@ export default function ProjectCard({ project, onOpenDetails }: ProjectCardProps
     >
       <div className="project-art" aria-hidden="true">
         <div className="art-top">
-          <span>PROJECT / {project.number}</span>
+          <span>INNOVATION / {project.number}</span>
           <span className="art-live">
             <i /> {project.statusBadge}
           </span>
@@ -134,7 +134,12 @@ export default function ProjectCard({ project, onOpenDetails }: ProjectCardProps
           ))}
         </h3>
         <p className="project-headline">{project.headline}</p>
-        <p className="project-desc">{project.description}</p>
+
+        {/* Problem & Solution summary */}
+        <div className="card-problem-box">
+          <span className="problem-label">PROBLEM EXPLORED:</span>
+          <p>{project.problemExplored}</p>
+        </div>
 
         <div className="tag-list">
           {project.tags.map((tag) => (
@@ -147,9 +152,9 @@ export default function ProjectCard({ project, onOpenDetails }: ProjectCardProps
             type="button"
             className="case-study-btn"
             onClick={() => onOpenDetails(project)}
-            aria-label={`Open technical case study for ${project.title.replace('\n', ' ')}`}
+            aria-label={`Open case study for ${project.title.replace('\n', ' ')}`}
           >
-            Explore Case Study <ArrowUpRight size={15} className="arrow-icon" />
+            Explore Innovation Case Study <ArrowUpRight size={15} className="arrow-icon" />
           </button>
 
           {project.demoUrl && (
@@ -158,8 +163,8 @@ export default function ProjectCard({ project, onOpenDetails }: ProjectCardProps
               target="_blank"
               rel="noreferrer"
               className="card-quick-link"
-              title="Open Live Preview"
-              aria-label="Open Live Preview"
+              title="Verified Live Demo"
+              aria-label="Verified Live Demo"
             >
               <ExternalLink size={15} />
             </a>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import {
+  AlertCircle,
   ArrowUpRight,
   CheckCircle2,
   Clock,
@@ -8,7 +9,9 @@ import {
   ExternalLink,
   Github,
   Layers,
+  Lightbulb,
   ShieldAlert,
+  Users,
   X
 } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
@@ -22,7 +25,6 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const reduceMotion = useReducedMotion()
 
-  // Close on Escape key and prevent body scroll when open
   useEffect(() => {
     if (!project) return
 
@@ -44,7 +46,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     <AnimatePresence>
       {project && (
         <div className="modal-portal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-          {/* Backdrop */}
           <motion.div
             className="modal-backdrop"
             initial={{ opacity: 0 }}
@@ -54,7 +55,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             onClick={onClose}
           />
 
-          {/* Modal Container */}
           <div className="modal-container">
             <motion.div
               className="modal-card"
@@ -66,7 +66,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               {/* Header */}
               <div className="modal-header">
                 <div className="modal-meta">
-                  <span className="modal-num">PROJECT / {project.number}</span>
+                  <span className="modal-num">INNOVATION / {project.number}</span>
                   <span className="modal-status-badge">
                     <span className="status-dot-sm" />
                     {project.statusBadge}
@@ -75,7 +75,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <button
                   className="modal-close-btn"
                   onClick={onClose}
-                  aria-label="Close project modal"
+                  aria-label="Close innovation case study"
                 >
                   <X size={20} />
                 </button>
@@ -87,11 +87,38 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <h2 id="modal-title" className="modal-title">
                   {project.headline}
                 </h2>
-                <p className="modal-description">{project.description}</p>
 
-                {/* Tech Stack pills */}
+                {/* 1. Problem Explored & 2. Intended Users */}
+                <div className="modal-context-grid">
+                  <div className="modal-context-card">
+                    <div className="context-card-title">
+                      <AlertCircle size={15} className="text-lime" />
+                      <span>1. PROBLEM BEING EXPLORED</span>
+                    </div>
+                    <p>{project.problemExplored}</p>
+                  </div>
+
+                  <div className="modal-context-card">
+                    <div className="context-card-title">
+                      <Users size={15} className="text-lime" />
+                      <span>2. INTENDED USERS & PARTNERS</span>
+                    </div>
+                    <p>{project.intendedUsers}</p>
+                  </div>
+                </div>
+
+                {/* 3. Proposed Solution */}
+                <div className="modal-solution-card">
+                  <div className="context-card-title">
+                    <Lightbulb size={15} className="text-lime" />
+                    <span>3. PROPOSED / IMPLEMENTED SOLUTION</span>
+                  </div>
+                  <p>{project.proposedSolution}</p>
+                </div>
+
+                {/* 4. Actual Technology Stack */}
                 <div className="modal-section-title">
-                  <Layers size={14} /> TECH STACK & COMPONENTS
+                  <Layers size={14} /> 4. ACTUAL TECHNOLOGY STACK
                 </div>
                 <div className="modal-tags">
                   {project.hardwareOrStack.map((tech) => (
@@ -101,12 +128,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   ))}
                 </div>
 
-                {/* Three-part Feature Status Matrix */}
+                {/* 5, 6, 7. What Works, What is in Development, What is Planned */}
                 <div className="modal-feature-matrix">
-                  {/* Completed */}
+                  {/* 5. What currently works */}
                   <div className="matrix-column completed-col">
                     <div className="matrix-title">
-                      <CheckCircle2 size={16} /> COMPLETED & DEMONSTRABLE
+                      <CheckCircle2 size={16} /> 5. WHAT CURRENTLY WORKS
                     </div>
                     <ul>
                       {project.features.completed.map((feat, i) => (
@@ -115,10 +142,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </ul>
                   </div>
 
-                  {/* In Progress */}
+                  {/* 6. What is being developed */}
                   <div className="matrix-column in-progress-col">
                     <div className="matrix-title">
-                      <Clock size={16} /> CURRENTLY IN DEVELOPMENT
+                      <Clock size={16} /> 6. CURRENTLY IN DEVELOPMENT
                     </div>
                     <ul>
                       {project.features.inProgress.map((feat, i) => (
@@ -127,10 +154,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </ul>
                   </div>
 
-                  {/* Planned */}
+                  {/* 7. What remains planned */}
                   <div className="matrix-column planned-col">
                     <div className="matrix-title">
-                      <Compass size={16} /> PLANNED / ROADMAP
+                      <Compass size={16} /> 7. PLANNED ROADMAP
                     </div>
                     <ul>
                       {project.features.planned.map((feat, i) => (
@@ -143,12 +170,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {/* Architecture Notes */}
                 <div className="modal-arch-box">
                   <div className="arch-box-title">
-                    <Cpu size={15} /> ARCHITECTURE & PRINCIPLE
+                    <Cpu size={15} /> ARCHITECTURE & ENGINEERING NOTES
                   </div>
                   <p>{project.architectureNotes}</p>
                 </div>
 
-                {/* Verification Notice */}
+                {/* Transparency Notice */}
                 {project.verificationNote && (
                   <div className="modal-verification-notice">
                     <ShieldAlert size={15} />
@@ -157,7 +184,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 )}
               </div>
 
-              {/* Footer Actions */}
+              {/* Footer with 8. GitHub repo & 9. Verified Live Demo */}
               <div className="modal-footer">
                 <div className="modal-actions-left">
                   {project.repoUrl && (
@@ -167,7 +194,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       rel="noreferrer"
                       className="modal-action-btn primary"
                     >
-                      <Github size={16} /> View on GitHub <ArrowUpRight size={14} />
+                      <Github size={16} /> 8. Source Code on GitHub <ArrowUpRight size={14} />
                     </a>
                   )}
                   {project.demoUrl && (
@@ -177,12 +204,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       rel="noreferrer"
                       className="modal-action-btn secondary"
                     >
-                      <ExternalLink size={16} /> Live Preview <ArrowUpRight size={14} />
+                      <ExternalLink size={16} /> 9. Verified Live Demo <ArrowUpRight size={14} />
                     </a>
                   )}
                 </div>
                 <button className="modal-dismiss-btn" onClick={onClose}>
-                  Done
+                  Close Case Study
                 </button>
               </div>
             </motion.div>

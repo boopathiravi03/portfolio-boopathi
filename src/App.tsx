@@ -1,18 +1,21 @@
 import { useState } from 'react'
 import {
   ArrowDown,
-  ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   Check,
   Compass,
   Copy,
+  Cpu,
   Github,
+  Handshake,
+  Lightbulb,
   Linkedin,
   Mail,
   MoveUpRight,
+  Search,
   Sparkles,
-  Terminal
+  Users
 } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import CountUp from './components/CountUp'
@@ -25,10 +28,11 @@ import { projects, type Project } from './data/projects'
 import { useGitHubData } from './hooks/useGitHubData'
 import GitHubSection from './sections/GitHubSection'
 import ProjectCard from './sections/ProjectCard'
+import SmartWasteFlagship from './sections/SmartWasteFlagship'
 
 /**
- * 1. HERO SECTION
- * Masked dramatic text entrance, subtle floating geometry, electric lime accents
+ * 1. HERO SECTION: FOUNDER INTRODUCTION
+ * Masked dramatic text entrance, subtle floating geometry, dual CTAs
  */
 function Hero() {
   const reduceMotion = useReducedMotion()
@@ -67,9 +71,9 @@ function Hero() {
       <div className="hero-meta">
         <span className="hero-status-pill">
           <i className="status-dot" />
-          <span>OPEN TO COLLABORATION</span>
+          <span>PROTOTYPE STAGE · OPEN TO COLLABORATION & PILOTS</span>
         </span>
-        <span className="hero-location">DEVELOPER / INNOVATOR / BUILDER</span>
+        <span className="hero-location">TECHNOLOGY BUILDER · CHENNAI, INDIA</span>
       </div>
 
       <div className="hero-title-wrap">
@@ -79,7 +83,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          HELLO, I'M BOOPATHI.
+          FOUNDER-LED INNOVATION PORTFOLIO
         </motion.p>
 
         {/* Masked heading reveals */}
@@ -91,7 +95,7 @@ function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 0.85, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
-              BUILDING
+              BUILDING IDEAS INTO
             </motion.span>
           </span>
           <span className="mask-wrapper title-second">
@@ -101,28 +105,31 @@ function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 0.85, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             >
-              WHAT'S <em>NEXT.</em>
+              REAL-WORLD <em>INNOVATIONS.</em>
             </motion.span>
           </span>
         </h1>
       </div>
 
-      <div className="hero-bottom">
-        <p>
-          I turn curiosity into working software, hardware prototypes into practical solutions, and real-world
-          constraints into opportunities to build resilient systems.
+      <div className="hero-bottom-founder">
+        <p className="hero-supporting-copy">
+          I’m Boopathi, a technology builder exploring AI, software, and connected systems to solve practical
+          problems. I turn ideas into prototypes, learn through experimentation, and collaborate with people who
+          want to build meaningful products.
         </p>
 
-        <a className="round-link" href="#work" aria-label="Scroll to selected work">
-          <ArrowDown size={20} />
-        </a>
-
-        <span className="hero-index">
-          PORTFOLIO — 2026<br />
-          MADE WITH INTENTION.
-        </span>
+        {/* Dual CTAs */}
+        <div className="hero-cta-group">
+          <a href="#innovations" className="hero-cta-btn primary">
+            EXPLORE MY INNOVATIONS <ArrowRight size={16} />
+          </a>
+          <a href="#collaborate" className="hero-cta-btn secondary">
+            LET’S COLLABORATE <ArrowUpRight size={16} />
+          </a>
+        </div>
       </div>
 
+      {/* Rotating editorial badge */}
       <motion.div
         className="hero-decoration"
         aria-hidden="true"
@@ -138,41 +145,42 @@ function Hero() {
 }
 
 /**
- * 2. ABOUT / THE MINDSET
- * Live animated counters, philosophy, and learning trajectory
+ * 2. BUILDER MINDSET & APPROACH
  */
 function About({ repoCount }: { repoCount: number }) {
   return (
-    <section className="section about-section" id="about">
+    <section className="section about-section" id="mindset">
       <div className="container">
         <div className="section-label">
-          <span>01 / THE MINDSET</span>
-          <span>ABOUT ME & APPROACH</span>
+          <span>01 / THE BUILDER'S MINDSET</span>
+          <span>EXECUTION THROUGH EXPERIMENTATION</span>
         </div>
 
         <div className="about-grid">
           <Reveal>
             <h2 className="manifesto">
-              CURIOUS BY<br />
-              NATURE. <span>BUILDER</span><br />
-              BY CHOICE.
+              RAPID PROTOTYPES.<br />
+              <span>HONEST</span><br />
+              EXECUTION.
             </h2>
           </Reveal>
 
           <Reveal delay={0.12} className="about-aside">
             <p className="lead">
-              I focus on the intersection of embedded IoT hardware, modern web systems, and applied AI.
+              I believe innovation is not about making unsubstantiated claims; it is about building working
+              software and physical hardware that can be tested, critiqued, and refined.
             </p>
             <p>
-              Rather than waiting for ideal conditions, I prototype rapidly: hooking up ultrasonic sensors to
-              ESP32 microcontrollers, wiring FastAPI services to natural language models, and developing responsive
-              mobile interfaces in Flutter and Kotlin.
+              My portfolio is an open innovation workbench: connecting ESP32 ultrasonic sensors on a breadboard
+              to solve municipal waste overflow, crafting natural language query pipelines on top of relational
+              databases, and engineering offline-first educational tools for rural schools.
             </p>
             <p>
-              Every project is a transparent experiment in solving real-world friction.
+              I build to understand real-world friction and collaborate with mentors, technical partners, and
+              domain experts who want to solve hard problems.
             </p>
-            <a className="text-link" href="#journey">
-              Explore my trajectory <ArrowDownRight size={16} />
+            <a className="text-link" href="#vision">
+              Read my startup vision <ArrowRight size={16} />
             </a>
           </Reveal>
         </div>
@@ -191,14 +199,14 @@ function About({ repoCount }: { repoCount: number }) {
               <CountUp end={4} duration={1.2} />
               <span>+</span>
             </strong>
-            <small>SPECIALIZED TECH DOMAINS</small>
+            <small>ACTIVE PROTOTYPE DOMAINS</small>
           </div>
           <div>
             <strong>
               <CountUp end={100} duration={1.2} />
               <span>%</span>
             </strong>
-            <small>TRANSPARENT & VERIFIED WORK</small>
+            <small>VERIFIED & TRANSPARENT CODEBASES</small>
           </div>
         </div>
       </div>
@@ -207,28 +215,27 @@ function About({ repoCount }: { repoCount: number }) {
 }
 
 /**
- * 3. SELECTED WORK
- * Authentic projects with distinct status matrixes and deep case study modal
+ * 3. INNOVATION PORTFOLIO: ORGANIZED BY PROBLEM & PRODUCT
  */
-function Work({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
+function Innovations({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
   return (
-    <section className="section work-section" id="work">
+    <section className="section work-section" id="innovations">
       <div className="container">
         <div className="section-label">
-          <span>02 / SELECTED WORK</span>
-          <span>VERIFIED ARCHITECTURES & PROTOTYPES</span>
+          <span>02 / INNOVATION PORTFOLIO</span>
+          <span>PROBLEM-DRIVEN WORKING PROTOTYPES</span>
         </div>
 
         <div className="work-heading">
           <Reveal>
             <h2>
               REAL PROBLEMS.<br />
-              <span>TESTED CODE.</span>
+              <span>WORKING SOLUTIONS.</span>
             </h2>
           </Reveal>
           <p>
-            Featured implementations across IoT hardware, conversational AI, and educational technology. Every
-            feature status is accurately documented.
+            Each innovation is developed to solve tangible real-world friction. Every feature status is
+            strictly classified into what works, what is in active development, and what is planned.
           </p>
         </div>
 
@@ -245,9 +252,9 @@ function Work({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
         <div className="project-note-banner">
           <span className="note-star">✳</span>
           <p>
-            <strong>INTEGRITY NOTE:</strong> Hardware specifications (ESP32 ultrasonic time-of-flight) and software
-            capabilities are documented according to actual bench testing. No exaggerated municipal scale or
-            fabricated telemetry claims.
+            <strong>INNOVATION TRANSPARENCY:</strong> Click any card to view the comprehensive 9-point technical
+            matrix: the exact problem explored, target users, implemented solution, technology stack, working
+            features, active development, roadmap, and verified repositories.
           </p>
         </div>
       </div>
@@ -256,213 +263,91 @@ function Work({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
 }
 
 /**
- * 4. JOURNEY TIMELINE
- * Step-by-step evolution with animated timeline connector
- */
-function Journey() {
-  const steps = [
-    {
-      num: '01',
-      phase: 'FOUNDATIONS & LOGIC',
-      title: 'Programming, Data Structures & Systems',
-      text: 'Deep dive into C/C++, Python, database design, and algorithmic problem-solving to build rock-solid engineering foundations.',
-      status: 'Continuous'
-    },
-    {
-      num: '02',
-      phase: 'HARDWARE & PHYSICAL COMPUTING',
-      title: 'Microcontrollers & Sensor Integration',
-      text: 'Prototyping with ESP32, ultrasonic fill sensors, and breadboard circuitry for real-world environmental monitoring.',
-      status: 'Active Prototyping'
-    },
-    {
-      num: '03',
-      phase: 'FULL-STACK & CONVERSATIONAL AI',
-      title: 'FastAPI, Modern React & Language Models',
-      text: 'Architecting end-to-end applications that bridge relational databases with natural language query interfaces and cross-platform clients.',
-      status: 'Active Development'
-    },
-    {
-      num: '04',
-      phase: 'APPLIED IMPACT & DEPLOYMENT',
-      title: 'Real Solutions for Real Communities',
-      text: 'Creating mother-tongue educational assistants (Santali/Hindi) and agricultural marketplace platforms with offline-first architectures.',
-      status: 'Iterative Testing'
-    }
-  ]
-
-  return (
-    <section className="section journey-section" id="journey">
-      <div className="container">
-        <div className="section-label">
-          <span>04 / THE JOURNEY</span>
-          <span>SYSTEMATIC DEVELOPMENT</span>
-        </div>
-
-        <div className="journey-head">
-          <Reveal>
-            <h2>
-              NOT A FINISH LINE.<br />
-              <span>A STARTING POINT.</span>
-            </h2>
-          </Reveal>
-          <p>
-            Engineering is an ongoing experiment. Here is the path I am following, connecting low-level hardware
-            to modern cloud platforms.
-          </p>
-        </div>
-
-        <div className="journey-list">
-          {steps.map((step, i) => (
-            <Reveal key={step.num} delay={i * 0.08}>
-              <div className="journey-item">
-                <span className="journey-num">{step.num}</span>
-                <div>
-                  <span className="journey-phase">{step.phase}</span>
-                  <h3>{step.title}</h3>
-                </div>
-                <p>{step.text}</p>
-                <span className="journey-status-tag">{step.status}</span>
-                <ArrowUpRight size={19} className="journey-arrow" />
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/**
- * 5. TOOLKIT & ANIMATED SKILL BARS
- * Visual skill proficiency bars that fill up when in view
- */
-function Toolkit() {
-  const reduceMotion = useReducedMotion()
-
-  const skillCategories = [
-    {
-      category: 'LANGUAGES & RUNTIMES',
-      items: [
-        { name: 'Python (FastAPI, Data, ML)', level: 85 },
-        { name: 'TypeScript & JavaScript', level: 85 },
-        { name: 'Kotlin (Android Native)', level: 75 },
-        { name: 'Dart (Flutter SDK)', level: 75 },
-        { name: 'C / C++ (Embedded & IoT)', level: 70 }
-      ]
-    },
-    {
-      category: 'SYSTEMS & FRAMEWORKS',
-      items: [
-        { name: 'React 19 & Vite Tooling', level: 88 },
-        { name: 'ESP32 / Ultrasonic Hardware', level: 80 },
-        { name: 'SQLAlchemy & Relational Databases', level: 80 },
-        { name: 'Git & GitHub Collaboration', level: 90 },
-        { name: 'REST APIs & Offline-First Sync', level: 82 }
-      ]
-    }
-  ]
-
-  return (
-    <section className="section toolkit-section" id="toolkit">
-      <div className="container">
-        <div className="section-label">
-          <span>05 / THE TOOLKIT</span>
-          <span>VERIFIED TECHNICAL CAPABILITIES</span>
-        </div>
-
-        <div className="toolkit-grid">
-          <div>
-            <Reveal>
-              <h2>
-                LEARN THE<br />
-                TOOLS. <span>QUESTION</span><br />
-                THE RULES.
-              </h2>
-            </Reveal>
-            <p className="toolkit-statement">
-              I believe in choosing the right tool for the job — whether that is low-level C++ for microsecond
-              sensor loops or high-performance FastAPI backends for real-time natural language query orchestration.
-            </p>
-            <div className="toolkit-callout">
-              <Terminal size={18} />
-              <span>Always exploring next-generation patterns and hardware integrations.</span>
-            </div>
-          </div>
-
-          <div className="toolkit-content">
-            {skillCategories.map((cat, catIdx) => (
-              <div key={cat.category} className="skill-cat-block">
-                <span className="cat-title">{cat.category}</span>
-                <div className="skill-bars-list">
-                  {cat.items.map((skill, i) => (
-                    <div key={skill.name} className="skill-bar-row">
-                      <div className="skill-bar-info">
-                        <span className="skill-bar-name">{skill.name}</span>
-                        <span className="skill-bar-pct">{skill.level}%</span>
-                      </div>
-                      <div className="skill-bar-track">
-                        <motion.div
-                          className="skill-bar-fill"
-                          initial={reduceMotion ? { width: `${skill.level}%` } : { width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          transition={{
-                            duration: 0.9,
-                            delay: catIdx * 0.15 + i * 0.08,
-                            ease: [0.16, 1, 0.3, 1]
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/**
- * 6. VISION SECTION
- * High-impact editorial design with rotating geometric emblem
+ * 4. STARTUP VISION: FROM PROTOTYPES TO PRODUCTS
  */
 function Vision() {
   const reduceMotion = useReducedMotion()
 
+  const stages = [
+    {
+      step: 'STAGE 01',
+      title: 'EXPLORE',
+      lead: 'Identify Real-World Friction',
+      desc: 'Investigate underserved daily problems across civic management, regional education, and agricultural commerce where technology can remove systemic bottlenecks.',
+      icon: Search
+    },
+    {
+      step: 'STAGE 02',
+      title: 'BUILD',
+      lead: 'Create & Test Prototypes',
+      desc: 'Build functional physical hardware and end-to-end software prototypes. Validate assumptions through bench testing, firmware calibration, and rapid iteration.',
+      icon: Cpu
+    },
+    {
+      step: 'STAGE 03',
+      title: 'COLLABORATE',
+      lead: 'Validate with Users & Partners',
+      desc: 'Engage startup mentors, domain practitioners, and early pilot partners to stress-test prototypes against real operational conditions.',
+      icon: Users
+    }
+  ]
+
   return (
-    <section className="vision-section" id="vision">
-      <div className="container vision-inner">
+    <section className="section vision-founder-section" id="vision">
+      <div className="container">
         <div className="section-label">
-          <span>06 / LOOKING FORWARD</span>
-          <span>THE BIGGER PICTURE</span>
+          <span>05 / STARTUP VISION</span>
+          <span>THE WORKING INNOVATION ROADMAP</span>
         </div>
 
-        <Reveal>
-          <p className="vision-overline">THE NEXT BREAKTHROUGH STARTS WITH AN HONEST QUESTION.</p>
-          <h2>
-            WHAT IF WE<br />
-            MADE IT <span>BETTER?</span>
-          </h2>
-          <div className="vision-bottom">
-            <p>
-              I build technology that solves practical friction: from preventing overflowing waste containers with
-              smart sensor nodes, to empowering rural primary schools with mother-tongue AI assistants.
-            </p>
-            <a className="text-link" href="#contact">
-              Have a problem to solve? Let's connect <ArrowUpRight size={16} />
-            </a>
-          </div>
-        </Reveal>
+        <div className="vision-head">
+          <Reveal>
+            <p className="vision-kicker">WHERE PROTOTYPES BECOME IMPACT</p>
+            <h2 className="manifesto">
+              FROM PROTOTYPES<br />
+              TO <span>PRODUCTS.</span>
+            </h2>
+          </Reveal>
+          <p className="vision-intro">
+            I am exploring ideas, testing prototypes, and looking for opportunities to turn promising solutions
+            into useful, scalable products. Here is the operational framework I use to move from concept to
+            validation.
+          </p>
+        </div>
+
+        <div className="vision-stages-grid">
+          {stages.map((stg, i) => {
+            const Icon = stg.icon
+            return (
+              <Reveal key={stg.step} delay={i * 0.1}>
+                <div className="vision-stage-card">
+                  <div className="stage-top">
+                    <span className="stage-step-tag">{stg.step}</span>
+                    <Icon size={20} className="text-lime" />
+                  </div>
+                  <h3>{stg.title}</h3>
+                  <strong className="stage-lead">{stg.lead}</strong>
+                  <p>{stg.desc}</p>
+                </div>
+              </Reveal>
+            )
+          })}
+        </div>
+
+        <div className="vision-disclaimer-card">
+          <Lightbulb size={18} className="text-lime" />
+          <p>
+            <strong>FOUNDER TRANSPARENCY:</strong> This framework represents my working development approach as an
+            independent technical builder—not an established corporation or validated business model. I am actively
+            seeking mentors and collaborators to refine these ventures.
+          </p>
+        </div>
 
         <motion.div
           className="vision-symbol"
           aria-hidden="true"
           animate={reduceMotion ? undefined : { rotate: 360 }}
-          transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
+          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
         >
           ✳
         </motion.div>
@@ -472,10 +357,10 @@ function Vision() {
 }
 
 /**
- * 7. CONTACT SECTION & COPY-EMAIL INTERACTION
- * Interactive email copy with tooltip feedback, verified social links
+ * 5. COLLABORATION SECTION (MAIN CONVERSION GOAL)
+ * Tailored tracks for mentors, technical partners, domain experts, and pilot partners
  */
-function Contact() {
+function Collaboration() {
   const [copied, setCopied] = useState(false)
   const contactEmail = 'boopathiravi03@gmail.com'
 
@@ -489,31 +374,63 @@ function Contact() {
     }
   }
 
+  const tracks = [
+    {
+      role: 'STARTUP MENTORS',
+      desc: 'Experienced operators and founders who can advise on product positioning, hardware scalability, and pilot roadmaps.'
+    },
+    {
+      role: 'TECHNICAL COLLABORATORS',
+      desc: 'Software engineers, firmware architects, and AI researchers interested in building and open-sourcing cutting-edge prototypes.'
+    },
+    {
+      role: 'PRODUCT & DOMAIN EXPERTS',
+      desc: 'Municipal sanitation specialists, rural educators, and agricultural experts who understand the nuances of the problems.'
+    },
+    {
+      role: 'EARLY PILOT PARTNERS',
+      desc: 'Organizations, campuses, or community groups open to trialing low-cost prototypes in controlled, low-stakes environments.'
+    }
+  ]
+
   return (
-    <footer className="contact-section" id="contact">
+    <footer className="contact-section" id="collaborate">
       <div className="container">
         <div className="section-label">
-          <span>07 / SAY HELLO</span>
-          <span>GOOD THINGS START WITH A CONVERSATION</span>
+          <span>06 / COLLABORATION</span>
+          <span>MAIN CONVERSION & PARTNERSHIP CHANNELS</span>
         </div>
 
-        <p className="contact-kicker">HAVE AN IDEA OR ENGINEERING CHALLENGE?</p>
+        <p className="contact-kicker">OPEN TO PILOTS, ADVICE & JOINT BUILDING</p>
         <h2>
-          LET'S MAKE<br />
-          <span>SOMETHING.</span>
+          GOOD IDEAS GET BETTER<br />
+          <span>WHEN WE BUILD TOGETHER.</span>
         </h2>
 
+        {/* Tailored Audience Tracks */}
+        <div className="collab-tracks-grid">
+          {tracks.map((t, idx) => (
+            <div key={idx} className="collab-track-card">
+              <span className="track-role">
+                <Handshake size={13} className="text-lime" /> {t.role}
+              </span>
+              <p>{t.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Action Panel */}
         <div className="contact-bottom">
           <div className="contact-email-container">
             <a className="email-link" href={`mailto:${contactEmail}`}>
-              {contactEmail} <MoveUpRight size={20} />
+              {contactEmail} <MoveUpRight size={22} />
             </a>
 
             <button
               type="button"
               className="copy-email-btn"
               onClick={handleCopyEmail}
-              aria-label="Copy email address to clipboard"
+              aria-label="Copy verified email address to clipboard"
             >
               {copied ? (
                 <>
@@ -523,7 +440,7 @@ function Contact() {
               ) : (
                 <>
                   <Copy size={16} />
-                  <span>COPY EMAIL</span>
+                  <span>COPY EMAIL ADDRESS</span>
                 </>
               )}
             </button>
@@ -532,19 +449,21 @@ function Contact() {
           <div className="contact-note">
             <Sparkles size={16} className="text-lime" />
             <p>
-              Open to collaborative projects, technical discussions, and innovative prototype development.
+              Direct contact with Boopathi. Ready to discuss prototypes, hardware bench demos, code architectures,
+              or exploratory partnership opportunities.
             </p>
           </div>
         </div>
 
+        {/* Footer Meta Line */}
         <div className="footer-line">
           <a className="brand footer-brand" href="#top" aria-label="Boopathi Home">
-            B<span>®</span>
+            BOOPATHI<span>®</span>
           </a>
 
           <span className="footer-copyright">
             BOOPATHI CREATIVE PORTFOLIO © 2026<br />
-            DESIGNED & ENGINEERED TO EVOLVE.
+            DESIGNED & ENGINEERED FOR FOUNDER-LED INNOVATION.
           </span>
 
           <div className="socials">
@@ -553,6 +472,7 @@ function Contact() {
               target="_blank"
               rel="noreferrer"
               aria-label="Boopathi GitHub profile"
+              title="Verified GitHub Account"
             >
               <Github size={18} />
             </a>
@@ -577,14 +497,14 @@ function Contact() {
             <a
               href={`mailto:${contactEmail}`}
               aria-label="Send email directly"
-              title="Send Email"
+              title="Direct Email"
             >
               <Mail size={18} />
             </a>
           </div>
 
           <a className="back-top" href="#top" aria-label="Back to top">
-            BACK TO TOP <ArrowRight size={14} />
+            BACK TO TOP <ArrowDown size={14} style={{ transform: 'rotate(180deg)' }} />
           </a>
         </div>
       </div>
@@ -613,22 +533,21 @@ export default function App() {
           <div className="ticker-track">
             {Array.from({ length: 4 }).map((_, i) => (
               <span key={i}>
-                CURIOUS MINDS BUILD THINGS <b>✳</b> HARDWARE TO CLOUD <b>✳</b> IDEAS INTO ACTION <b>✳</b> VERIFIED CODE <b>✳</b>
+                BUILDING IDEAS INTO REAL-WORLD INNOVATIONS <b>✳</b> HARDWARE TO CLOUD <b>✳</b> PROTOTYPING FOR PILOT PARTNERS <b>✳</b> VERIFIED OPEN CODE <b>✳</b>
               </span>
             ))}
           </div>
         </div>
 
         <About repoCount={github.profile.public_repos} />
-        <Work onOpenProject={(proj) => setSelectedProject(proj)} />
+        <Innovations onOpenProject={(proj) => setSelectedProject(proj)} />
+        <SmartWasteFlagship />
         <GitHubSection github={github} />
-        <Journey />
-        <Toolkit />
         <Vision />
-        <Contact />
+        <Collaboration />
       </main>
 
-      {/* Case Study Detail Modal */}
+      {/* Case Study Detail Modal with 9-point matrix */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}

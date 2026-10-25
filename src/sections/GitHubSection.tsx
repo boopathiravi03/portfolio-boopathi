@@ -10,6 +10,7 @@ import {
   Github,
   RefreshCw,
   Search,
+  Sparkles,
   Star
 } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
@@ -22,7 +23,6 @@ interface GitHubSectionProps {
   github: UseGitHubDataReturn
 }
 
-// Language color dots matching typical developer palettes
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: '#3178C6',
   JavaScript: '#F7DF1E',
@@ -77,14 +77,8 @@ function formatEventSummary(event: GitHubEvent): { title: string; detail: string
   }
   if (event.type === 'CreateEvent') {
     return {
-      title: `Created ${event.payload.ref_type || 'repository'}`,
+      title: `Created ${event.payload.ref_type || 'branch/tag'}`,
       detail: event.payload.ref || 'initial'
-    }
-  }
-  if (event.type === 'WatchEvent') {
-    return {
-      title: 'Starred repository',
-      detail: event.repo.name
     }
   }
   return {
@@ -101,7 +95,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [sortBy, setSortBy] = useState<'updated' | 'stars'>('updated')
 
-  // Available unique languages from fetched repositories
+  // Available unique languages
   const availableLanguages = useMemo(() => {
     const langs = new Set<string>()
     repos.forEach((repo) => {
@@ -129,30 +123,29 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
       })
   }, [repos, selectedLanguage, searchQuery, sortBy])
 
-  // Aggregate stats strictly derived from real API data
   const totalStars = useMemo(() => {
     return repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0)
   }, [repos])
 
   return (
-    <section className="section github-section" id="github">
+    <section className="section github-section" id="build-log">
       <div className="container">
         {/* Section Header */}
         <div className="section-label">
-          <span>03 / LIVE GITHUB REPOSITORIES</span>
-          <span>ACCOUNT: @boopathiravi03</span>
+          <span>04 / BUILDING IN PUBLIC</span>
+          <span>THE BUILD LOG & CODEBASE TRACKER</span>
         </div>
 
         <div className="github-head">
           <div>
             <Reveal>
               <h2 className="github-title">
-                SOURCE CODE.<br />
-                <span>OPEN & VERIFIED.</span>
+                THE BUILD LOG.<br />
+                <span>CODE IN THE OPEN.</span>
               </h2>
             </Reveal>
             <p className="github-subtitle">
-              Live repository data fetched directly from the official GitHub REST API for{' '}
+              A transparent view of engineering iterations, commits, and public repositories under{' '}
               <a
                 href="https://github.com/boopathiravi03"
                 target="_blank"
@@ -161,11 +154,10 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               >
                 @boopathiravi03 <ArrowUpRight size={13} />
               </a>
-              . No fabricated metrics.
+              . Every prototype is developed through rapid experimentation.
             </p>
           </div>
 
-          {/* Refresh & Sync Controls */}
           <div className="github-sync-panel">
             <button
               type="button"
@@ -175,32 +167,42 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               aria-label="Refresh GitHub Data"
             >
               <RefreshCw size={14} className={loading ? 'is-spinning' : ''} />
-              <span>{loading ? 'Syncing API...' : 'Refresh GitHub Data'}</span>
+              <span>{loading ? 'Syncing...' : 'Sync GitHub Activity'}</span>
             </button>
             {lastFetched && (
               <span className="last-fetched-text">
-                Last checked: {lastFetched.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                Checked: {lastFetched.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
           </div>
         </div>
 
-        {/* Rate limit / Fallback Notice Banner */}
+        {/* Partial View Disclaimer Note */}
+        <div className="build-log-disclaimer">
+          <Sparkles size={16} className="text-lime" />
+          <p>
+            <strong>SCOPE NOTE:</strong> Public GitHub events represent a subset of engineering activity.
+            They do not capture hardware breadboard soldering, circuit testing, private internal code, or offline
+            design work.
+          </p>
+        </div>
+
+        {/* Rate limit / Fallback Banner */}
         {(rateLimited || isFallback) && (
           <div className="github-banner" role="status">
             <AlertCircle size={16} />
             <div>
-              <strong>Using verified fallback snapshot for @boopathiravi03.</strong>{' '}
+              <strong>Displaying verified snapshot for @boopathiravi03.</strong>{' '}
               <span>
                 {rateLimited
-                  ? 'GitHub REST API unauthenticated rate limit reached (60 req/hr). Authentic data is preserved.'
-                  : 'Displaying cached repository dataset. Click refresh to query GitHub directly.'}
+                  ? 'GitHub unauthenticated REST rate limit reached. Verified authentic snapshot is active.'
+                  : 'Cached snapshot active. Click sync to poll GitHub directly.'}
               </span>
             </div>
           </div>
         )}
 
-        {/* Live Metrics Row */}
+        {/* Metrics Row */}
         <div className="github-stats-grid">
           <div className="gh-stat-card">
             <div className="gh-stat-top">
@@ -210,18 +212,18 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
             <strong>
               <CountUp end={profile.public_repos || repos.length} duration={1.2} />
             </strong>
-            <small>Live count from GitHub profile</small>
+            <small>Live from GitHub profile API</small>
           </div>
 
           <div className="gh-stat-card">
             <div className="gh-stat-top">
-              <span>PRIMARY LANGUAGES</span>
+              <span>ACTIVE DOMAINS</span>
               <Github size={16} />
             </div>
             <strong>
               <CountUp end={availableLanguages.length - 1} duration={1.2} />
             </strong>
-            <small>TypeScript, Python, Kotlin, Dart, etc.</small>
+            <small>IoT, AI, Mobile, Web Systems</small>
           </div>
 
           <div className="gh-stat-card">
@@ -232,7 +234,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
             <strong>
               <CountUp end={totalStars} duration={1.2} />
             </strong>
-            <small>Accumulated across public repos</small>
+            <small>Accumulated across public repositories</small>
           </div>
 
           <div className="gh-stat-card">
@@ -241,17 +243,61 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               <span className="status-dot-sm" />
             </div>
             <strong className="profile-badge">boopathiravi03</strong>
-            <small>Active since {new Date(profile.created_at).getFullYear()}</small>
+            <small>Active builder since {new Date(profile.created_at).getFullYear()}</small>
           </div>
         </div>
 
-        {/* Filters and Search Bar */}
+        {/* Chronological Public Activity Feed */}
+        <div className="activity-feed-section">
+          <div className="activity-feed-head">
+            <div className="activity-feed-title">
+              <GitCommit size={16} />
+              <h3>VERIFIED RECENT COMMITS & REPO EVENTS</h3>
+            </div>
+            <span className="activity-disclaimer">
+              Direct events from /users/boopathiravi03/events/public
+            </span>
+          </div>
+
+          <div className="activity-timeline">
+            {events.slice(0, 6).map((evt) => {
+              const summary = formatEventSummary(evt)
+              const repoUrl = `https://github.com/${evt.repo.name}`
+              return (
+                <div key={evt.id} className="activity-event-row">
+                  <div className="activity-marker">
+                    <span className="marker-dot" />
+                  </div>
+                  <div className="activity-info">
+                    <div className="activity-main-line">
+                      <span className="activity-action-title">{summary.title}</span>
+                      <a
+                        href={repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="activity-repo-link"
+                      >
+                        {evt.repo.name} <ArrowUpRight size={12} />
+                      </a>
+                    </div>
+                    <div className="activity-sub-line">
+                      <span className="activity-detail">{summary.detail}</span>
+                      <span className="activity-time">{formatRelativeTime(evt.created_at)}</span>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Repositories Controls & Filter Bar */}
         <div className="github-controls-bar">
           <div className="search-input-wrap">
             <Search size={15} />
             <input
               type="text"
-              placeholder="Search repositories by name or topic..."
+              placeholder="Search codebases by name or keyword..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search repositories"
@@ -261,15 +307,14 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
                 type="button"
                 className="clear-search-btn"
                 onClick={() => setSearchQuery('')}
-                aria-label="Clear search query"
+                aria-label="Clear search"
               >
                 ✕
               </button>
             )}
           </div>
 
-          {/* Language filter pills */}
-          <div className="language-pills" role="radiogroup" aria-label="Filter by programming language">
+          <div className="language-pills" role="radiogroup" aria-label="Filter by language">
             {availableLanguages.map((lang) => (
               <button
                 key={lang}
@@ -290,7 +335,6 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
             ))}
           </div>
 
-          {/* Sort selector */}
           <div className="sort-group">
             <label htmlFor="repo-sort-select">SORT:</label>
             <select
@@ -343,13 +387,13 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
 
               <p className="repo-desc">
                 {repo.description || (
-                  <span className="no-desc-text">No description provided on repository.</span>
+                  <span className="no-desc-text">Open-source codebase by Boopathi.</span>
                 )}
               </p>
 
               <div className="repo-meta-row">
                 <div className="repo-stats-group">
-                  <span className="repo-stat" title={`${repo.stargazers_count} stargazers`}>
+                  <span className="repo-stat" title={`${repo.stargazers_count} stars`}>
                     <Star size={13} /> {repo.stargazers_count}
                   </span>
                   <span className="repo-stat" title={`${repo.forks_count} forks`}>
@@ -367,7 +411,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
 
         {filteredRepos.length === 0 && (
           <div className="no-repos-found">
-            <p>No repositories match your current search and language filters.</p>
+            <p>No repositories match your active search and filter criteria.</p>
             <button
               type="button"
               className="reset-filters-btn"
@@ -380,50 +424,6 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
             </button>
           </div>
         )}
-
-        {/* Real Public Activity Feed */}
-        <div className="activity-feed-section">
-          <div className="activity-feed-head">
-            <div className="activity-feed-title">
-              <GitCommit size={16} />
-              <h3>RECENT PUBLIC GITHUB ACTIVITY</h3>
-            </div>
-            <span className="activity-disclaimer">
-              Derived from GitHub REST API /events/public. Does not include private commits or offline work.
-            </span>
-          </div>
-
-          <div className="activity-timeline">
-            {events.slice(0, 6).map((evt) => {
-              const summary = formatEventSummary(evt)
-              const repoUrl = `https://github.com/${evt.repo.name}`
-              return (
-                <div key={evt.id} className="activity-event-row">
-                  <div className="activity-marker">
-                    <span className="marker-dot" />
-                  </div>
-                  <div className="activity-info">
-                    <div className="activity-main-line">
-                      <span className="activity-action-title">{summary.title}</span>
-                      <a
-                        href={repoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="activity-repo-link"
-                      >
-                        {evt.repo.name} <ArrowUpRight size={12} />
-                      </a>
-                    </div>
-                    <div className="activity-sub-line">
-                      <span className="activity-detail">{summary.detail}</span>
-                      <span className="activity-time">{formatRelativeTime(evt.created_at)}</span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
       </div>
     </section>
   )

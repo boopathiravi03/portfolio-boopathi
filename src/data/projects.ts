@@ -10,6 +10,9 @@ export interface Project {
   category: string
   title: string
   headline: string
+  problemExplored: string
+  intendedUsers: string
+  proposedSolution: string
   description: string
   tags: string[]
   visual: 'waste' | 'database' | 'flutter' | 'android'
@@ -20,43 +23,49 @@ export interface Project {
   features: ProjectFeatureMatrix
   architectureNotes: string
   hardwareOrStack: string[]
-  verificationNote?: string
+  verificationNote: string
 }
 
 export const projects: Project[] = [
   {
     id: 'smart-waste',
     number: '01',
-    category: 'IoT · HARDWARE PROTOTYPE',
+    category: 'CONNECTED HARDWARE · CIVIC TECH',
     title: 'Smart Waste\nManagement',
-    headline: 'ESP32 Ultrasonic Fill-Level Sensing & Overflow Monitoring',
+    headline: 'ESP32 Ultrasonic Fill-Level Sensing & Overflow Alerting',
+    problemExplored:
+      'Municipal and campus waste bins overflow unpredictably, creating hygiene risks while collection trucks burn fuel checking half-empty containers on rigid fixed schedules.',
+    intendedUsers:
+      'Campus facility teams, municipal sanitation coordinators, and commercial property managers seeking data-driven bin servicing.',
+    proposedSolution:
+      'A low-cost IoT sensor node that measures waste depth continuously via ultrasonic time-of-flight, calculates percentage fill, and alerts dispatchers before bins overflow.',
     description:
-      'A connected waste-monitoring prototype using an ESP32 microcontroller and HC-SR04 ultrasonic sensor to calculate bin fill depth in real time, track capacity, and alert operators prior to overflow.',
-    tags: ['ESP32', 'HC-SR04', 'C++ / Arduino', 'Web Dashboard'],
+      'A connected waste-monitoring prototype combining an ESP32 microcontroller and HC-SR04 ultrasonic sensor to calculate fill depth in real time, track capacity changes, and alert operators prior to overflow.',
+    tags: ['ESP32 DevKit', 'HC-SR04 Ultrasonic', 'C++ / Arduino', 'IoT Telemetry', 'Web Dashboard'],
     visual: 'waste',
     statusBadge: 'Hardware Prototype',
     statusType: 'prototype',
     repoUrl: 'https://github.com/boopathiravi03/Smart_dustbin',
     features: {
       completed: [
-        'ESP32 microcontroller firmware interfacing with HC-SR04 ultrasonic sensor',
-        'Time-of-flight distance measurement translated to percentage fill capacity',
+        'ESP32 microcontroller firmware interfacing with HC-SR04 ultrasonic transducer',
+        'Time-of-flight distance calculation converted to calibrated fill percentage',
         'Local serial telemetry and threshold breach alerting (>80% capacity warning)',
         'Breadboard prototype circuit testing with status LEDs and serial diagnostics'
       ],
       inProgress: [
-        'WiFi telemetry dispatch from ESP32 to a central lightweight web dashboard',
+        'WiFi telemetry dispatch from ESP32 to central lightweight web dashboard',
         'Fill-rate change velocity calculation to estimate time until overflow',
-        'Multi-bin status table with priority sorting based on fill level'
+        'Multi-bin status table with priority sorting based on urgency'
       ],
       planned: [
-        'Automated municipal collection route prioritization based on fill urgency',
-        'Solar battery power management and deep sleep mode for field longevity',
+        'Automated collection route prioritization based on fill urgency',
+        'Solar battery power management with deep-sleep power cycling for outdoor longevity',
         'Cellular/NB-IoT module integration for wide-area deployment beyond local WiFi'
       ]
     },
     architectureNotes:
-      'Sensor emits a 40kHz sonic burst, reads echo duration, calculates depth D = (time * speedOfSound) / 2, and maps remaining capacity against calibrated bin dimensions.',
+      'Ultrasonic transducer emits 40kHz sonic burst, reads echo duration, calculates depth D = (time * 0.0343) / 2, and maps remaining capacity against calibrated bin dimensions.',
     hardwareOrStack: ['ESP32 Dev Module', 'HC-SR04 Sensor', 'Arduino C++', 'HTTP Client', 'HTML/JS Dashboard'],
     verificationNote:
       'Hardware and firmware prototype in active bench testing. Does not claim deployed municipal fleets or measured city-wide fuel savings.'
@@ -64,12 +73,18 @@ export const projects: Project[] = [
   {
     id: 'bg-chatbox',
     number: '02',
-    category: 'AI · DATABASE INTELLIGENCE',
+    category: 'APPLIED AI · DATABASE INTELLIGENCE',
     title: 'BG AI\nDatabase Chat',
-    headline: 'Natural Language Query Engine & Real-Time Visualization',
+    headline: 'Natural Language Query Engine & Dynamic Visualizations',
+    problemExplored:
+      'Non-technical product builders, analysts, and operators struggle to interrogate production relational databases without relying on specialized SQL engineers.',
+    intendedUsers:
+      'Startup teams, data analysts, operations managers, and non-technical founders needing instant conversational access to relational data.',
+    proposedSolution:
+      'A conversational database intelligence platform that inspects schema metadata, safely converts natural language questions into verified queries, and renders real-time data charts.',
     description:
       'AI-powered conversational database intelligence system built with FastAPI and React 19. Translates natural language questions into structured queries, executes relational analysis, and visualizes insights dynamically.',
-    tags: ['FastAPI', 'React 19', 'TypeScript', 'SQLAlchemy 2.0', 'Python 3.11+'],
+    tags: ['FastAPI 0.141', 'React 19', 'TypeScript', 'SQLAlchemy 2.0', 'Vite 8', 'Tailwind CSS v4'],
     visual: 'database',
     statusBadge: 'Active Development',
     statusType: 'active',
@@ -100,12 +115,18 @@ export const projects: Project[] = [
   {
     id: 'tribal-lingua',
     number: '03',
-    category: 'EDTECH · APPLIED NLP',
+    category: 'EDTECH · INDIGENOUS NLP',
     title: 'Tribal Lingua\nAI Assistant',
     headline: 'Mother-Tongue Pedagogy for Primary Classrooms',
+    problemExplored:
+      'Young primary students in tribal regions face severe learning barriers when instruction is solely in mainstream languages, compounded by intermittent internet in rural classrooms.',
+    intendedUsers:
+      'Primary educators, volunteer teachers, and early-grade students in rural Jharkhand and indigenous language regions.',
+    proposedSolution:
+      'A mother-tongue pedagogical assistant combining IndicTrans2 neural translation (Hindi ↔ Santali) with Groq LLM pipelines, delivering sync-then-offline classroom worksheets and flashcards.',
     description:
       'Educational assistant platform built with Flutter and FastAPI. Uses Groq LLM pipelines and IndicTrans2 for Hindi ↔ Santali translation, creating visual flashcards and worksheets designed for offline-first rural tablets.',
-    tags: ['Flutter', 'FastAPI', 'IndicTrans2', 'Groq API', 'Python'],
+    tags: ['Flutter SDK', 'FastAPI', 'IndicTrans2', 'Groq API', 'Python 3.11', 'Offline-First'],
     visual: 'flutter',
     statusBadge: 'Functional Architecture',
     statusType: 'active',
@@ -135,12 +156,18 @@ export const projects: Project[] = [
   {
     id: 'farm-trading',
     number: '04',
-    category: 'MOBILE · ANDROID COMMERCE',
+    category: 'AGRITECH · MARKET ACCESS',
     title: 'FarmTrading\nMobile App',
     headline: 'Direct Farmer-Dealer Commerce & Market Pricing',
+    problemExplored:
+      'Smallholder agricultural producers lose significant margin to multiple intermediary middlemen and lack direct transparency on wholesale market rates.',
+    intendedUsers:
+      'Agricultural producers, smallholder farmers, and regional produce dealers seeking fair, transparent wholesale commerce.',
+    proposedSolution:
+      'A native mobile marketplace allowing farmers to list produce lots directly, review wholesale mandi benchmark prices, and communicate with verified regional buyers.',
     description:
       'Android application connecting agricultural producers directly with regional produce dealers and buyers to enable transparent price discovery and reduce intermediary friction.',
-    tags: ['Kotlin', 'Android SDK', 'REST API', 'Vercel Demo'],
+    tags: ['Kotlin', 'Android SDK', 'REST API', 'Vercel Web Demo'],
     visual: 'android',
     statusBadge: 'Android App & Web Preview',
     statusType: 'prototype',
