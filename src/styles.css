@@ -3064,6 +3064,368 @@ button {
 }
 
 /* ============================================================
+   NEW STARS BRANDING, STARFIELD & ORBITAL STYLES
+   ============================================================ */
+.new-stars-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.brand-logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(163, 230, 53, 0.12);
+  border: 1px solid rgba(163, 230, 53, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.brand-text span {
+  font: 11px var(--mono);
+  vertical-align: top;
+  margin-left: 2px;
+  color: var(--lime);
+}
+
+.starfield-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.nebula-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.nebula-top {
+  top: 10%;
+  right: 10%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
+}
+
+.nebula-bottom {
+  bottom: 5%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(163, 230, 53, 0.05) 0%, transparent 70%);
+}
+
+.orbital-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ring-outer {
+  top: 18%;
+  right: 8%;
+  width: 380px;
+  height: 380px;
+  border: 1px dashed rgba(163, 230, 53, 0.15);
+}
+
+.ring-middle {
+  top: 25%;
+  right: 12%;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(163, 230, 53, 0.08);
+}
+
+.star-particle {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 10px rgba(163, 230, 53, 0.5);
+  animation: twinkle infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+.new-stars-hero-title {
+  font-size: clamp(3.4rem, 10.5vw, 9.6rem);
+}
+
+.hero-brand-statement {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-tagline-lead {
+  font: 500 13px var(--mono);
+  color: var(--lime);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.new-stars-badge {
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border-color: rgba(163, 230, 53, 0.4);
+}
+
+/* About Pillars */
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+
+.about-pillar-card {
+  background: #171815;
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  border-radius: 6px;
+}
+
+.pillar-kicker {
+  font: 10px var(--mono);
+  color: var(--lime);
+  letter-spacing: 0.12em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.about-pillar-card h4 {
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.about-pillar-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #aeb1a6;
+}
+
+/* Our Approach (4 phases) */
+.approach-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.approach-card {
+  background: #171815;
+  border: 1px solid var(--line);
+  padding: 24px 20px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.approach-card:hover {
+  border-color: var(--lime);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.approach-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.approach-phase-tag {
+  font: 10px var(--mono);
+  color: var(--lime);
+  letter-spacing: 0.1em;
+}
+
+.approach-card h3 {
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  margin: 0 0 6px;
+}
+
+.approach-lead {
+  font: 11px var(--mono);
+  color: #d1d4c8;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.approach-card p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: #9aa090;
+  margin: 0 0 16px;
+}
+
+.approach-status-row {
+  margin-top: auto;
+  margin-bottom: 14px;
+}
+
+.approach-status-pill {
+  font: 9px var(--mono);
+  color: var(--lime);
+  background: rgba(163, 230, 53, 0.08);
+  border: 1px solid rgba(163, 230, 53, 0.3);
+  padding: 4px 10px;
+  border-radius: 99px;
+  display: inline-block;
+}
+
+.approach-deliverables {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.deliverable-label {
+  font: 8px var(--mono);
+  color: #7d8174;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.approach-deliverables ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.approach-deliverables li {
+  font-size: 11px;
+  color: #b5b9ac;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Milestone Classification Box */
+.milestone-classification-box {
+  background: #151613;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 24px;
+  margin-top: 30px;
+}
+
+.milestone-box-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 10px var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--lime);
+  margin-bottom: 16px;
+}
+
+.milestone-box-header h4 {
+  margin: 0;
+  font-size: 11px;
+}
+
+.milestone-legend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.dot-completed {
+  background: var(--lime);
+  box-shadow: 0 0 8px var(--lime);
+}
+
+.dot-progress {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.dot-planned {
+  background: #94a3b8;
+}
+
+.legend-item strong {
+  display: block;
+  font: 10px var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.legend-item span {
+  font-size: 12px;
+  color: #9ba092;
+  line-height: 1.5;
+}
+
+.new-stars-contact-title {
+  font-size: clamp(3.6rem, 11vw, 10.2rem);
+  letter-spacing: -0.1em;
+  line-height: 0.82;
+  font-weight: 500;
+  margin: 0;
+}
+
+.new-stars-contact-title span {
+  color: var(--lime);
+}
+
+.track-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.track-subtitle {
+  font-size: 13px;
+  color: #e5e8de;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
    RESPONSIVE LAYOUTS & MEDIA QUERIES
    ============================================================ */
 @media (min-width: 1300px) {
@@ -3108,9 +3470,18 @@ button {
   .flagship-capabilities-grid {
     grid-template-columns: 1fr;
   }
+  .approach-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .milestone-legend-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
+  .approach-cards-grid {
+    grid-template-columns: 1fr;
+  }
   .container {
     width: calc(100% - 36px);
   }

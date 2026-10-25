@@ -41,8 +41,8 @@ export default function SmartWasteFlagship() {
       <div className="container">
         {/* Section Header */}
         <div className="section-label">
-          <span>03 / FLAGSHIP HARDWARE PROTOTYPE</span>
-          <span>CIVIC IOT & CONNECTED SENSING</span>
+          <span>03 / FEATURED CASE STUDY</span>
+          <span>NEW STARS HARDWARE & SENSOR LAB</span>
         </div>
 
         <div className="flagship-hero">
@@ -362,9 +362,9 @@ export default function SmartWasteFlagship() {
         <div className="flagship-integrity-card">
           <Sparkles size={16} className="text-lime" />
           <p>
-            <strong>BUILDER INTEGRITY NOTICE:</strong> This project is currently an active hardware prototype
-            validated on a development bench. It has not been deployed across municipal fleets, and no field-measured
-            fuel savings or municipal partnerships are claimed.
+            <strong>INITIATIVE INTEGRITY NOTICE:</strong> This project is currently an active hardware prototype
+            engineered under NEW STARS and validated on a development test bench. It has not been deployed across municipal fleets,
+            and no field-measured fuel savings or municipal partnerships are claimed.
           </p>
         </div>
       </div>

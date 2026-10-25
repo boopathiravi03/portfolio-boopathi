@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { ArrowUpRight, Menu, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 
-const links = [
+const navLinks = [
+  { label: 'About', href: '#about' },
   { label: 'Innovations', href: '#innovations' },
-  { label: 'Smart Waste', href: '#smart-waste' },
-  { label: 'Build Log', href: '#build-log' },
-  { label: 'Vision', href: '#vision' }
+  { label: 'Innovation Lab', href: '#innovation-lab' },
+  { label: 'Our Approach', href: '#approach' },
+  { label: 'Contact', href: '#contact' }
 ]
 
 export default function Navbar() {
@@ -16,23 +17,29 @@ export default function Navbar() {
   return (
     <header className="nav-wrap">
       <nav className="nav container" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Boopathi home">
-          BOOPATHI<span>®</span>
+        {/* NEW STARS Brand Logo */}
+        <a className="brand new-stars-brand" href="#top" aria-label="NEW STARS Home">
+          <div className="brand-logo-icon">
+            <Sparkles size={16} className="text-lime" />
+          </div>
+          <span className="brand-text">
+            NEW STARS<span>®</span>
+          </span>
         </a>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Links */}
         <div className="nav-links desktop-only">
-          {links.map((link) => (
-            <a key={link.href} href={link.href}>
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} className="nav-link-item">
               {link.label}
             </a>
           ))}
-          <a className="nav-contact" href="#collaborate">
-            Let's Collaborate <ArrowUpRight size={15} />
+          <a className="nav-contact" href="#contact">
+            Partner With Us <ArrowUpRight size={15} />
           </a>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile menu toggle */}
         <button
           className="menu-toggle"
           onClick={() => setOpen(!open)}
@@ -53,7 +60,7 @@ export default function Navbar() {
               transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <div className="mobile-nav-inner">
-                {links.map((link) => (
+                {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
@@ -65,10 +72,10 @@ export default function Navbar() {
                 ))}
                 <a
                   className="mobile-nav-contact"
-                  href="#collaborate"
+                  href="#contact"
                   onClick={() => setOpen(false)}
                 >
-                  Let's Collaborate <ArrowUpRight size={16} />
+                  Partner With Us <ArrowUpRight size={16} />
                 </a>
               </div>
             </motion.div>

@@ -128,24 +128,25 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
   }, [repos])
 
   return (
-    <section className="section github-section" id="build-log">
+    <section className="section github-section" id="innovation-lab">
       <div className="container">
         {/* Section Header */}
         <div className="section-label">
-          <span>04 / BUILDING IN PUBLIC</span>
-          <span>THE BUILD LOG & CODEBASE TRACKER</span>
+          <span>04 / INNOVATION LAB</span>
+          <span>OPEN REPOSITORIES & REAL-TIME ACTIVITY</span>
         </div>
 
         <div className="github-head">
           <div>
             <Reveal>
               <h2 className="github-title">
-                THE BUILD LOG.<br />
+                INNOVATION LAB.<br />
                 <span>CODE IN THE OPEN.</span>
               </h2>
             </Reveal>
             <p className="github-subtitle">
-              A transparent view of engineering iterations, commits, and public repositories under{' '}
+              The public engineering engine behind NEW STARS. All open-source repositories and codebases are developed
+              under the verified account{' '}
               <a
                 href="https://github.com/boopathiravi03"
                 target="_blank"
@@ -154,7 +155,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               >
                 @boopathiravi03 <ArrowUpRight size={13} />
               </a>
-              . Every prototype is developed through rapid experimentation.
+              . Every initiative is backed by real, inspectable commits.
             </p>
           </div>
 
@@ -167,7 +168,7 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
               aria-label="Refresh GitHub Data"
             >
               <RefreshCw size={14} className={loading ? 'is-spinning' : ''} />
-              <span>{loading ? 'Syncing...' : 'Sync GitHub Activity'}</span>
+              <span>{loading ? 'Syncing...' : 'Sync Lab Activity'}</span>
             </button>
             {lastFetched && (
               <span className="last-fetched-text">
@@ -181,9 +182,8 @@ export default function GitHubSection({ github }: GitHubSectionProps) {
         <div className="build-log-disclaimer">
           <Sparkles size={16} className="text-lime" />
           <p>
-            <strong>SCOPE NOTE:</strong> Public GitHub events represent a subset of engineering activity.
-            They do not capture hardware breadboard soldering, circuit testing, private internal code, or offline
-            design work.
+            <strong>LAB SCOPE NOTE:</strong> Public GitHub events represent open-source repository pushes.
+            They do not capture hardware breadboard soldering, offline sensor calibrations, circuit wiring, or proprietary pilot notes.
           </p>
         </div>
 
